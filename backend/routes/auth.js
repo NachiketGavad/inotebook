@@ -2,9 +2,14 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
+const jwt_Secret = "Nachiketis$good";
+
+// Route Create User
 // Create a User using POST : "/api/auth" doesn't require Authentication
-router.post('/',[
+router.post('/CreateUser',[
     body('name','Enter valid name').isLength({min:3}),
     body('email','Enter valid email').isEmail(),
     body('password','Enter valid password').isLength({min:5}),
@@ -25,16 +30,29 @@ async (req,res)=>{
             return res.status(400).json({error:"Email already exists"});
         }
 
+        const salt = await bcrypt.genSalt(10);
+        const sec_pass = await bcrypt.hash(req.body.password,salt);
+
         user = await User.create({
             name:req.body.name,
             email:req.body.email,
-            password:req.body.password,
+            password:sec_pass,
         })
+
+        const data = {
+            user : {
+                id :user.id,
+            }
+        };
+        // sign jwt token
+        const auth_token = jwt.sign(data,jwt_Secret);
 
         // .then(user=>res.json(user))
         // .catch(err=>{console.log(err)
         // res.json({error:'please enter unique value for email',message:err.message})
-        res.json(user);
+
+        // res.json(user);
+        res.json({auth_token});
     }
     catch(error){
         res.status(400).json({error:"Email already exists"});
