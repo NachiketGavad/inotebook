@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const jwt_Secret = "Nachiketis$good";
 
-// Route Create User
+// Route : Create User
 // Create a User using POST : "/api/auth" doesn't require Authentication
 router.post('/CreateUser',[
     body('name','Enter valid name').isLength({min:3}),
@@ -58,6 +58,49 @@ async (req,res)=>{
         res.status(400).json({error:"Email already exists"});
     }
     // res.send(req.body);
-})
+});
+
+
+// Route : Login User
+// Create a User using POST : "/api/auth" doesn't require Authentication
+router.post('/LoginUser',[
+    body('email','Please Give Valid Details').isEmail(),
+    body('password','Please Give Valid Details').exists(),
+],
+async (req,res)=>{
+
+    // check error
+    const error = validationResult(req);
+    if(!error.isEmpty()){
+        return res.status(400).json({error:error.array()});
+    }
+
+    try{
+        // check user exists
+        let user = await User.findOne({email:req.body.email});
+        if(!user){
+            return res.status(400).json({error:"Please Give Valid Details"});
+        }
+
+        // password compare
+        const passwordcompare = await bcrypt.compare(password,user.password);
+        if(!passwordcompare){
+            return res.status(400).json({error:"Please Give Valid Details"});
+        }
+
+        const data = {
+            user : {
+                id :user.id,
+            }
+        };
+        
+        const auth_token = jwt.sign(data,jwt_Secret);
+
+        res.json({auth_token});
+    }
+    catch(error){
+        res.status(500).json({error:"Internal Server Error"});
+    }
+});
 
 module.exports = router
