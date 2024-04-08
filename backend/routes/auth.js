@@ -4,6 +4,7 @@ const User = require('../models/User');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 const jwt_Secret = "Nachiketis$good";
 
@@ -75,15 +76,18 @@ async (req,res)=>{
         return res.status(400).json({error:error.array()});
     }
 
+    // can also be mapped like this
+    // const { email, password } = req.body;
     try{
         // check user exists
-        let user = await User.findOne({email:req.body.email});
+        let user = await User.findOne({"email":req.body.email});
         if(!user){
             return res.status(400).json({error:"Please Give Valid Details"});
         }
 
         // password compare
-        const passwordcompare = await bcrypt.compare(password,user.password);
+        // console.log(user)
+        const passwordcompare = await bcrypt.compare(req.body.password,user.password);
         if(!passwordcompare){
             return res.status(400).json({error:"Please Give Valid Details"});
         }
@@ -100,6 +104,21 @@ async (req,res)=>{
     }
     catch(error){
         res.status(500).json({error:"Internal Server Error"});
+    }
+});
+
+
+// Route get user using middleware, for reusability
+
+router.post('/GetUser',fetchuser,async (req,res)=>{
+    try{
+        const userid = req.user.id;
+        const user = await User.findById(userid).select("-password");
+        res.send(user);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({error:"internal server error"});
     }
 });
 
