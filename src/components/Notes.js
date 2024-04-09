@@ -12,8 +12,7 @@ const Notes = () => {
           return (
             <NoteItem
               key={note._id}
-              title={note.title}
-              description={note.description}
+              note={note}
             />
           );
         })}
