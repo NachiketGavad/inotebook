@@ -8,8 +8,64 @@ const NoteState = (props) => {
         "name":"nachi",
         "class":"1"
     }
+    const notes = [
+        {
+          "_id": "6615672eb72c3096462cbba9",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 13 user 1",
+          "description": "skdjflfsf",
+          "tag": "skfjk",
+          "date": "2024-04-09T16:05:02.600Z",
+          "__v": 0
+        },
+        {
+          "_id": "6615673db72c3096462cbbad",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 143 usedr 1",
+          "description": "skdjflffsf",
+          "tag": "skfjk",
+          "date": "2024-04-09T16:05:17.977Z",
+          "__v": 0
+        },
+        {
+          "_id": "66156745b72c3096462cbbaf",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 14a3 usedr 1",
+          "description": "skddjflffsf",
+          "tag": "skfjkf",
+          "date": "2024-04-09T16:05:25.987Z",
+          "__v": 0
+        },,
+        {
+          "_id": "6615673db72c3096462cbbad",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 143 usedr 1",
+          "description": "skdjflffsf",
+          "tag": "skfjk",
+          "date": "2024-04-09T16:05:17.977Z",
+          "__v": 0
+        },
+        {
+          "_id": "66156745b72c3096462cbbaf",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 14a3 usedr 1",
+          "description": "skddjflffsf",
+          "tag": "skfjkf",
+          "date": "2024-04-09T16:05:25.987Z",
+          "__v": 0
+        },
+        {
+          "_id": "6615675bb72c3096462cbbbb",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": "note 14af3 usaedr 1",
+          "description": "skddjflffsff",
+          "tag": "skfjkfaf",
+          "date": "2024-04-09T16:05:47.621Z",
+          "__v": 0
+        }
+      ]
     return (
-        <NoteContext.Provider value={state}>
+        <NoteContext.Provider value={notes}>
             {props.children}
         </NoteContext.Provider>
     )

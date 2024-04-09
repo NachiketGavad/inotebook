@@ -12,7 +12,7 @@ function App() {
       <Router>
         <div>
           <Navbar />
-          <h1>This is iNotebook</h1> 
+          {/* <h1 className="text-center">This is iNotebook</h1>  */}
           <Routes>
             <Route path="/" element={<Home key="Home" />} />
             <Route path="/About" element={<About key="About" />} />
