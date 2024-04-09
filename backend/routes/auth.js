@@ -1,10 +1,10 @@
 const express = require('express');
-const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
+const fetchuser = require('../middleware/fetchuser');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fetchuser = require('../middleware/fetchuser');
 
 const jwt_Secret = "Nachiketis$good";
 

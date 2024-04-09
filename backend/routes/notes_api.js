@@ -1,7 +1,7 @@
 const express = require('express');
+const router = express.Router();
 const fetchuser = require('../middleware/fetchuser');
 const Note = require('../models/Note');
-const router = express.Router();
 const {body,validationResult}  = require('express-validator');
 
 
@@ -45,6 +45,38 @@ router.post('/CreateNote',fetchuser,[
     catch(error){
         console.log(error.messae);
         res.status(500).send("Internal Sever Error");
+    }
+})
+
+// Route Update note
+router.put('/UpdateNote/:id',fetchuser,async (req,res)=>{
+    try{
+        const {title,description,tag} = req.body;
+
+        // create new empty note
+        const newnote = {};
+        if(title){newnote.title = title};
+        if(description){newnote.description = description};
+        if(tag){newnote.tag = tag};
+
+        // find note to be updated
+        let note = await Note.findById(req.params.id);
+        if(!note){
+            return res.status(404).send("Not Found");
+        }
+        
+        // check user authorized or not
+        if(note.user.toString() !== req.user.id){
+            return res.status(401).send("Not Allowed");
+        }
+
+        // update in db
+        note = await Note.findByIdAndUpdate(req.params.id, {$set : newnote},{new:true})
+        res.json({note});
+    }
+    catch(error){
+        console.log(error.message);
+        res.status(500).send("Internal Server Error");
     }
 })
 
