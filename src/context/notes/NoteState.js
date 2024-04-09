@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NoteContext  from "./NoteContext";
 
 import React from 'react'
@@ -8,7 +8,7 @@ const NoteState = (props) => {
         "name":"nachi",
         "class":"1"
     }
-    const notes = [
+    const notesinitial = [
         {
           "_id": "661567et2eb72c3096462dffcbba9",
           "user": "661438f98f2bf19ef6ebf81c",
@@ -64,8 +64,26 @@ const NoteState = (props) => {
           "__v": 0
         }
       ]
+
+      const [notes,setNotes] = useState(notesinitial);
+
+      // add note
+      const addNote = (title,description,tag)=>{
+        let note = {
+          "_id": "6615675bb72c3fadf096462cbbbb",
+          "user": "661438f98f2bf19ef6ebf81c",
+          "title": title,
+          "description": description,
+          "tag": tag,
+          "date": "2024-04-09T16:05:47.621Z",
+          "__v": 0
+        };
+        // Notes.push(note);
+        setNotes(notes.concat(note));
+      }
+
     return (
-        <NoteContext.Provider value={notes}>
+        <NoteContext.Provider value={{notes,addNote}}>
             {props.children}
         </NoteContext.Provider>
     )
