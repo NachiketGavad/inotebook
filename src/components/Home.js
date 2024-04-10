@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <div className="col-md-8 mx-auto">
       <AddNote/>
+      <hr/>
       <Notes/>
     </div>
   );

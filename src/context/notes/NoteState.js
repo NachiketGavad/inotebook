@@ -45,7 +45,7 @@ const NoteState = (props) => {
 
     let note = jsonbody;
     // console.log(note);
-    setNotes(notes.concat(note));
+    if(note) setNotes(notes.concat(note));
   };
 
   // delete note
@@ -75,7 +75,7 @@ const NoteState = (props) => {
   const editNote = async (_id, title, description, tag) => {
     // api call
     const response = await fetch(`${host}/api/notes/UpdateNote/${_id}`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -85,7 +85,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
     });
     const jsonbody = await response.json();
-    console.log(jsonbody);
+    // console.log(jsonbody);
 
     // edit logic in client
     for (let index = 0; index < notes.length; index++) {
@@ -95,6 +95,7 @@ const NoteState = (props) => {
         element.title = title;
         element.description = description;
         element.tag = tag;
+        break;
       }
     }
   };
