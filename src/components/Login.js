@@ -40,7 +40,8 @@ const Login = () => {
     }
 
     return (
-        <div>
+        <div className='container col-md-4 border rounded p-3 my-3'> 
+        <h3>Login</h3>
             <form>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
