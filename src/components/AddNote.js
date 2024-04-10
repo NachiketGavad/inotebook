@@ -16,7 +16,7 @@ const AddNote = () => {
     e.preventDefault();
     // console.log(note);
     addNote(note.title, note.description, note.tag);
-    setNote({title: "", description: "", tag: ""})
+    setNote({ title: "", description: "", tag: "" });
   };
   return (
     <div>
@@ -34,7 +34,8 @@ const AddNote = () => {
               className="form-control"
               id="title"
               name="title"
-              value={note.title} minLength={3} 
+              value={note.title}
+              minLength={3}
               onChange={onChange}
             />
           </div>
@@ -47,7 +48,8 @@ const AddNote = () => {
               className="form-control"
               id="description"
               name="description"
-              value={note.description} minLength={5} 
+              value={note.description}
+              minLength={5}
               onChange={onChange}
             />
           </div>
@@ -67,7 +69,8 @@ const AddNote = () => {
           <button
             type="submit"
             className="btn btn-primary"
-            onClick={handleClick} disabled={note.title.length<3 || note.description.length<5}
+            onClick={handleClick}
+            disabled={note.title.length < 3 || note.description.length < 5}
           >
             Add Note
           </button>
