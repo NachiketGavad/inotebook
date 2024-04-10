@@ -1,9 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
 
 const Notes = () => {
-  const {notes,addNote} = useContext(NoteContext);
+  const {notes,fetchAllNotes} = useContext(NoteContext);
+  useEffect(() => {
+    //Runs only on the first render
+    // console.log(notes);
+    fetchAllNotes();
+    // console.log(notes);
+  }, []);
   return (
     <div className="container my-3">
       <h2>Your Notes</h2>
