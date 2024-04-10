@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AlertContext from '../context/AlertContext';
 
 const Login = () => {
     const [user, Setuser] = useState({ email: "", password: "" });
     let history = useNavigate();
+    const {Alert,alertCapitalize,showAlert} = useContext(AlertContext);
     
     const handlesubmit = async (e) => {
         e.preventDefault();
-        console.log(user)
+        // console.log(user)
         const response = await fetch(`http://localhost:5000/api/auth/LoginUser`, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -15,14 +17,16 @@ const Login = () => {
             }, body: JSON.stringify({ email:user.email, password:user.password }), // body data type must match "Content-Type" header
         });
         const jsonbody = await response.json();
-        console.log(jsonbody)
+        // console.log(jsonbody.success)
         if(jsonbody.success){
             // save token and send to home
             localStorage.setItem('token',jsonbody.auth_token);
+
             history("/");
         }
         else{
-            alert("invalid credentials");
+            showAlert("danger","invalid credentials");
+            // alert("invalid credentials");
         }
     }
 

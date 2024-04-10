@@ -59,7 +59,8 @@ async (req,res)=>{
         res.json({success,auth_token});
     }
     catch(error){
-        res.status(400).json({error:"Email already exists"});
+        success=false;
+        res.status(400).json({success,error:"Email already exists"});
     }
     // res.send(req.body);
 });
@@ -73,10 +74,12 @@ router.post('/LoginUser',[
 ],
 async (req,res)=>{
 
+    let success=true;
     // check error
     const error = validationResult(req);
     if(!error.isEmpty()){
-        return res.status(400).json({error:error.array()});
+        success=false;
+        return res.status(400).json({success,error:error.array()});
     }
 
     // can also be mapped like this
@@ -84,7 +87,6 @@ async (req,res)=>{
     try{
         // check user exists
         let user = await User.findOne({"email":req.body.email});
-        let success=true;
         if(!user){
             success=false;
             return res.status(400).json({success,error:"Please Give Valid Details"});
@@ -109,7 +111,8 @@ async (req,res)=>{
         res.json({success,auth_token});
     }
     catch(error){
-        res.status(500).json({error:"Internal Server Error"});
+        success=false;
+        res.status(500).json({success,error:"Internal Server Error"});
     }
 });
 
