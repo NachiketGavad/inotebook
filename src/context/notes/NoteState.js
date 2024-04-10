@@ -29,22 +29,42 @@ const NoteState = (props) => {
   };
 
   // add note
-  const addNote = (title, description, tag) => {
-    let note = {
-      _id: "6615675bb72c3fadf096462cbbbb",
-      user: "661438f98f2bf19ef6ebf81c",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2024-04-09T16:05:47.621Z",
-      __v: 0,
-    };
-    // Notes.push(note);
+  const addNote = async (title, description, tag) => {
+    // api call
+    const response = await fetch(`${host}/api/notes/CreateNote`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+      },
+      body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
+    });
+    const jsonbody = await response.json();
+
+    let note = jsonbody;
+    // console.log(note);
     setNotes(notes.concat(note));
   };
 
   // delete note
-  const deleteNote = (_id) => {
+  const deleteNote = async (_id) => {
+    // api call
+    const response = await fetch(`${host}/api/notes/DeleteNote/${_id}`, {
+      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "auth-token":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+      },
+      body: JSON.stringify(), // body data type must match "Content-Type" header
+    });
+    const jsonbody = await response.json();
+    console.log(jsonbody);
+
+    // client side
     let cur = notes.filter((note) => {
       return note._id !== _id;
     });

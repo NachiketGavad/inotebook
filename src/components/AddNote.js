@@ -9,12 +9,12 @@ const AddNote = () => {
 
   const onChange = (e)=>{
     setNote({...note,[e.target.name]:e.target.value});
-    console.log(note);
+    // console.log(note);
   }
 
   const handleClick = (e)=>{
     e.preventDefault();
-    console.log(note);
+    // console.log(note);
     addNote(note.title,note.description,note.tag);
   }
   return (
