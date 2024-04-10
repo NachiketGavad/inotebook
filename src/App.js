@@ -4,6 +4,8 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import NoteState from "./context/notes/NoteState";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home key="Home" />} />
             <Route path="/About" element={<About key="About" />} />
+            <Route path="/Login" element={<Login key="Login" />} />
+            <Route path="/Signup" element={<Signup key="Signup" />} />
           </Routes>
         </div>
       </Router>

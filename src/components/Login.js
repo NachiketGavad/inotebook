@@ -1,0 +1,60 @@
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const Login = () => {
+    const [user, Setuser] = useState({ email: "", password: "" });
+    let history = useNavigate();
+    
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        console.log(user)
+        const response = await fetch(`http://localhost:5000/api/auth/LoginUser`, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+            }, body: JSON.stringify({ email:user.email, password:user.password }), // body data type must match "Content-Type" header
+        });
+        const jsonbody = await response.json();
+        console.log(jsonbody)
+        if(jsonbody.success){
+            // save token and send to home
+            localStorage.setItem('token',jsonbody.auth_token);
+            history("/");
+        }
+        else{
+            alert("invalid credentials");
+        }
+    }
+
+    // const handleChangeEmail = (event) =>{
+    //     Setuser({email : event.target.value})
+    // }
+
+    // const handleChangePassword = (event) =>{
+    //     Setuser({password : event.target.value})
+    // }
+
+    
+    const onChangeuser = (e)=>{
+        Setuser({...user, [e.target.name]: e.target.value})
+    }
+
+    return (
+        <div>
+            <form>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email address</label>
+                    <input type="email" className="form-control" name="email"  id="email" value={user.email}  onChange={onChangeuser} aria-describedby="emailHelp" />
+                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                    <input type="password" className="form-control" name="password" value={user.password} onChange={onChangeuser} id="exampleInputPassword1" />
+                </div>
+                <button type="submit" className="btn btn-primary" onClick={handlesubmit}>Submit</button>
+            </form>
+        </div>
+    )
+}
+
+export default Login

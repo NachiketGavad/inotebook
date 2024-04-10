@@ -16,11 +16,13 @@ const Notes = () => {
   const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
 
   const updateNote = (currentNote) => {
+    // console.log(ref.current)
     ref.current.click();
     setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
   }
 
   const handleClick = (e) => {
+    // console.log(refClose.current)
     editNote(note.id, note.etitle, note.edescription, note.etag)
     refClose.current.click();
   }

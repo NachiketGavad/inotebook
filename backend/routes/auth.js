@@ -18,17 +18,20 @@ router.post('/CreateUser',[
 async (req,res)=>{
     // console.log(req.body);
     const error = validationResult(req);
+    let success=true;
     // const user = User(req.body);
     // user.save()
     if(!error.isEmpty()){
-        return res.status(400).json({error:error.array()});
+        success=false
+        return res.status(400).json({success,error:error.array()});
     }
 
     try{
         // check user exists
         let user = await User.findOne({email:req.body.email});
         if(user){
-            return res.status(400).json({error:"Email already exists"});
+            success=false
+            return res.status(400).json({success,error:"Please Enter Valid Details"});
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -53,7 +56,7 @@ async (req,res)=>{
         // res.json({error:'please enter unique value for email',message:err.message})
 
         // res.json(user);
-        res.json({auth_token});
+        res.json({success,auth_token});
     }
     catch(error){
         res.status(400).json({error:"Email already exists"});
@@ -81,15 +84,18 @@ async (req,res)=>{
     try{
         // check user exists
         let user = await User.findOne({"email":req.body.email});
+        let success=true;
         if(!user){
-            return res.status(400).json({error:"Please Give Valid Details"});
+            success=false;
+            return res.status(400).json({success,error:"Please Give Valid Details"});
         }
 
         // password compare
         // console.log(user)
         const passwordcompare = await bcrypt.compare(req.body.password,user.password);
         if(!passwordcompare){
-            return res.status(400).json({error:"Please Give Valid Details"});
+            success=false;
+            return res.status(400).json({success,error:"Please Give Valid Details"});
         }
 
         const data = {
@@ -100,7 +106,7 @@ async (req,res)=>{
         
         const auth_token = jwt.sign(data,jwt_Secret);
 
-        res.json({auth_token});
+        res.json({success,auth_token});
     }
     catch(error){
         res.status(500).json({error:"Internal Server Error"});

@@ -16,7 +16,7 @@ const AddNote = () => {
     e.preventDefault();
     // console.log(note);
     addNote(note.title, note.description, note.tag);
-    setNote({ title: "", description: "", tag: "" });
+    setNote({id:"", title: "", description: "", tag: "" });
   };
   return (
     <div>

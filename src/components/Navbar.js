@@ -44,6 +44,18 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+            <ul className="navbar-nav">
+              <li className="nav-item mx-1">
+                <Link className="btn btn-primary" to="/Login">
+                Login
+                </Link>
+              </li>
+              <li className="nav-item mx-1">
+                <Link className="btn btn-primary" to="/Signup">
+                Signup
+                </Link>
+              </li>
+            </ul>
         </div>
       </nav>
     </div>
