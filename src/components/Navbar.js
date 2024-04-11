@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Navbar = () => {
   let location = useLocation();
@@ -13,6 +14,8 @@ const Navbar = () => {
     // notes=[];
     history("/");
   }
+
+    const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <div>
@@ -63,6 +66,9 @@ const Navbar = () => {
                 Logout
               </button></div>
           }
+    <button onClick={toggleDarkMode}>
+      {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+    </button>
         </div>
       </nav>
     </div>

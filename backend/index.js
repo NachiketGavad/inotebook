@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Hello this is backend!')
+  res.send('Hello this is iNotebook backend!')
 })
 
 app.use('/api/auth',require('./routes/auth'))
