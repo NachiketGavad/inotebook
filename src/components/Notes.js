@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
+import AlertContext from '../context/AlertContext';
 
 const Notes = () => {
   const { notes, fetchAllNotes, editNote } = useContext(NoteContext);
+  const {alert,alertCapitalize,showAlert} = useContext(AlertContext);
+  
   useEffect(() => {
     //Runs only on the first render
     // console.log(notes);
@@ -25,6 +28,7 @@ const Notes = () => {
     // console.log(refClose.current)
     editNote(note.id, note.etitle, note.edescription, note.etag)
     refClose.current.click();
+    showAlert("Note Updated Successfully","success");
   }
 
   const onChange = (e) => {

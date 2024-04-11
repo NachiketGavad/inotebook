@@ -7,20 +7,24 @@ const AlertState = (props) => {
     const [alert, setAlert] = useState(null);
 
     const alertCapitalize = (word) => {
+        if(word=='danger'){
+            word='error';
+        }
         const lower = word.toLowerCase();
         return lower.charAt(0).toUpperCase() + lower.slice(1);
     }
 
     const showAlert = (message, type) => {
-        console.log('alert');
         setAlert({
             msg: message,
             type: type
         })
+        // console.log(alert);
         // remove alert automatically
         setTimeout(() => {
             setAlert(null);
         }, 1500);
+        // console.log(alert);
     }
 
     return (

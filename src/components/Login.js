@@ -5,7 +5,7 @@ import AlertContext from '../context/AlertContext';
 const Login = () => {
     const [user, Setuser] = useState({ email: "", password: "" });
     let history = useNavigate();
-    const {Alert,alertCapitalize,showAlert} = useContext(AlertContext);
+    const {alert,alertCapitalize,showAlert} = useContext(AlertContext);
     
     const handlesubmit = async (e) => {
         e.preventDefault();
@@ -19,13 +19,14 @@ const Login = () => {
         const jsonbody = await response.json();
         // console.log(jsonbody.success)
         if(jsonbody.success){
+            showAlert("Logged in Successfully","success");
             // save token and send to home
             localStorage.setItem('token',jsonbody.auth_token);
 
             history("/");
         }
         else{
-            showAlert("danger","invalid credentials");
+            showAlert("Invalid credentials","danger");
             // alert("invalid credentials");
         }
     }
@@ -44,8 +45,9 @@ const Login = () => {
     }
 
     return (
-        <div className='container col-md-4 border rounded p-3 my-3'> 
-        <h3>Login</h3>
+        <div className='container col-md-4 border rounded p-3'> 
+        <h3 className='my-3'>Login</h3>
+      <hr/>
             <form>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>

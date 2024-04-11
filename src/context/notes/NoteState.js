@@ -62,13 +62,14 @@ const NoteState = (props) => {
       body: JSON.stringify(), // body data type must match "Content-Type" header
     });
     const jsonbody = await response.json();
-    console.log(jsonbody);
+    // console.log(jsonbody);
 
     // client side
     let cur = notes.filter((note) => {
       return note._id !== _id;
     });
     setNotes(cur);
+    return jsonbody.success;
   };
 
   // Edit note

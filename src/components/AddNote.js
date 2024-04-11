@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
+import AlertContext from '../context/AlertContext';
 
 const AddNote = () => {
   const { notes, addNote } = useContext(NoteContext);
 
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
+  const {alert,alertCapitalize,showAlert} = useContext(AlertContext);
+    
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
     // console.log(note);
@@ -17,10 +20,11 @@ const AddNote = () => {
     // console.log(note);
     addNote(note.title, note.description, note.tag);
     setNote({id:"", title: "", description: "", tag: "" });
+    showAlert("New Note Created Successfully","success");
   };
   return (
     <div>
-      <div className="container my-3 md-3 lg-3">
+      <div className="container md-3 lg-3">
         {/* This is Home */}
         <h2> Add Notes</h2>
         <form>
