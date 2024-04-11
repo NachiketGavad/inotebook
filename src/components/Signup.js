@@ -41,7 +41,7 @@ const Signup = () => {
 
   return (
     <div className='container col-md-4 border rounded p-3 my-3'>
-      <h3 className='my-3'>Signup</h3>
+      <h3 className='my-3'>Register to use iNotebook</h3>
       <hr/>
       <form>
         <div className="mb-3">

@@ -11,7 +11,7 @@ const NoteState = (props) => {
   const [notes, setNotes] = useState(notesinitial);
 
   //fetch all notes
-  const fetchAllNotes = async ()=>{
+  const fetchAllNotes = async () => {
     // api call
     const response = await fetch(`${host}/api/notes/GetNotes`, {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -19,13 +19,15 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+          localStorage.getItem('token')
       },
       body: JSON.stringify(), // body data type must match "Content-Type" header
     });
     const jsonbody = await response.json();
     // console.log(jsonbody);
-    setNotes(jsonbody.notes);
+    if(jsonbody.success){
+      setNotes(jsonbody.notes);
+    }
   };
 
   // add note
@@ -37,15 +39,15 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+          localStorage.getItem('token')
       },
-      body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
+      body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
     });
     const jsonbody = await response.json();
 
     let note = jsonbody;
     // console.log(note);
-    if(note) setNotes(notes.concat(note));
+    if (note) setNotes(notes.concat(note));
   };
 
   // delete note
@@ -57,7 +59,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+          localStorage.getItem('token')
       },
       body: JSON.stringify(), // body data type must match "Content-Type" header
     });
@@ -81,9 +83,9 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
         "auth-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNDM4Zjk4ZjJiZjE5ZWY2ZWJmODFjIn0sImlhdCI6MTcxMjY2MDc2N30.p6RAf2Bbn8FMNeasPYy_Q_cDx3CdLlF29fbey3QFCwM"
+          localStorage.getItem('token')
       },
-      body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
+      body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
     });
     const jsonbody = await response.json();
     // console.log(jsonbody);
@@ -102,7 +104,7 @@ const NoteState = (props) => {
   };
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote ,fetchAllNotes}}>
+    <NoteContext.Provider value={{ notes,setNotes, addNote, deleteNote, editNote, fetchAllNotes }}>
       {props.children}
     </NoteContext.Provider>
   );

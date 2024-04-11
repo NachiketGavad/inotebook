@@ -1,15 +1,22 @@
-import React,{useEffect} from "react";
-import { Link,useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    let location = useLocation();
-    useEffect(() => {
-        console.log(location.pathname);
-      }, [location]);
+  let location = useLocation();
+  let history = useNavigate();
+  useEffect(() => {
+    console.log(location.pathname);
+  }, [location]);
+
+  const handlelogout = () => {
+    localStorage.removeItem('token');
+    // notes=[];
+    history("/");
+  }
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary"  data-bs-theme="light">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             iNotebook
@@ -28,29 +35,34 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==='/'?'active':""}`} aria-current="page" to="/">
+                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ""}`} aria-current="page" to="/">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname==='/About'?'active':""}`}to="/About">
+                <Link className={`nav-link ${location.pathname === '/About' ? 'active' : ""}`} to="/About">
                   About
                 </Link>
               </li>
             </ul>
           </div>
+          {!localStorage.getItem('token') ?
             <ul className="navbar-nav">
               <li className="nav-item m-1">
                 <Link className="btn btn-primary" to="/Login">
-                Login
+                  Login
                 </Link>
               </li>
               <li className="nav-item m-1">
                 <Link className="btn btn-primary" to="/Signup">
-                Signup
+                  Signup
                 </Link>
               </li>
-            </ul>
+            </ul> : <div>
+              <button className="btn btn-primary" onClick={handlelogout}>
+                Logout
+              </button></div>
+          }
         </div>
       </nav>
     </div>

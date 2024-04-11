@@ -46,7 +46,7 @@ const Login = () => {
 
     return (
         <div className='container col-md-4 border rounded p-3'> 
-        <h3 className='my-3'>Login</h3>
+        <h3 className='my-3'>Login to use iNotebook</h3>
       <hr/>
             <form>
                 <div className="mb-3">

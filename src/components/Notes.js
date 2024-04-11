@@ -2,15 +2,22 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
 import AlertContext from '../context/AlertContext';
+import { useNavigate } from 'react-router-dom'
 
 const Notes = () => {
-  const { notes, fetchAllNotes, editNote } = useContext(NoteContext);
-  const {alert,alertCapitalize,showAlert} = useContext(AlertContext);
-  
+  const { notes,setNotes, fetchAllNotes, editNote } = useContext(NoteContext);
+  const { alert, alertCapitalize, showAlert } = useContext(AlertContext);
+  const history = useNavigate();
+
   useEffect(() => {
-    //Runs only on the first render
+    //Runs when notes list changes
     // console.log(notes);
-    fetchAllNotes();
+    if (localStorage.getItem('token')) {
+      fetchAllNotes();
+    } else {
+      setNotes([]);
+      history("/login");
+    }
     // console.log(notes);
   }, [notes]);
 
@@ -28,7 +35,7 @@ const Notes = () => {
     // console.log(refClose.current)
     editNote(note.id, note.etitle, note.edescription, note.etag)
     refClose.current.click();
-    showAlert("Note Updated Successfully","success");
+    showAlert("Note Updated Successfully", "success");
   }
 
   const onChange = (e) => {
@@ -109,13 +116,13 @@ const Notes = () => {
 
       <h2>Your Notes</h2>
       <div className="row">
-        {(notes.length===0) && 'No Notes to Display'}
+        {(notes.length === 0) && 'No Notes to Display'}
         {
-        notes.map((note) => {
-          return (
-            <NoteItem key={note._id} note={note} updateNote={updateNote} />
-          );
-        })}
+          notes.map((note) => {
+            return (
+              <NoteItem key={note._id} note={note} updateNote={updateNote} />
+            );
+          })}
       </div>
     </div>
   );
