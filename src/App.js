@@ -8,7 +8,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import AlertState from "./context/AlertState";
 import Alert from "./components/Alert";
-import { DarkModeProvider } from "./context/DarkModeContext";
+import {DarkModeProvider} from './context/DarkModeContext'
+
 
 function App() {
   return (

@@ -1,6 +1,9 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDarkMode } from '../context/DarkModeContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
+
 
 const Navbar = () => {
   let location = useLocation();
@@ -15,11 +18,18 @@ const Navbar = () => {
     history("/");
   }
 
-    const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
+  const toggleTheme = () => {
+    // Toggle data-bs-theme attribute value
+    const theme = document.documentElement.getAttribute('data-bs-theme');
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-bs-theme', newTheme);
+  };
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             iNotebook
@@ -66,9 +76,7 @@ const Navbar = () => {
                 Logout
               </button></div>
           }
-    <button onClick={toggleDarkMode}>
-      {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-    </button>
+          <FontAwesomeIcon icon={faCircleHalfStroke} onClick={() => { toggleDarkMode(); toggleTheme(); }} style={{cursor:'pointer'}} className="mx-2"/>
         </div>
       </nav>
     </div>
