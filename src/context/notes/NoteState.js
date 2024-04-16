@@ -6,7 +6,7 @@ import React from "react";
 const NoteState = (props) => {
   const notesinitial = [];
 
-  const host = "http://localhost:5000";
+  const host = process.env.REACT_APP_HOST;
 
   const [notes, setNotes] = useState(notesinitial);
 
@@ -18,7 +18,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token":
+        "auth_token":
           localStorage.getItem('token')
       },
       body: JSON.stringify(), // body data type must match "Content-Type" header
@@ -38,7 +38,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token":
+        "auth_token":
           localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
@@ -58,7 +58,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token":
+        "auth_token":
           localStorage.getItem('token')
       },
       body: JSON.stringify(), // body data type must match "Content-Type" header
@@ -82,7 +82,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-        "auth-token":
+        "auth_token":
           localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header

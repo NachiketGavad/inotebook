@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import AlertContext from '../context/AlertContext';
 
 const Signup = () => {
+  const host = process.env.REACT_APP_HOST;
   const [user, setUser] = useState({ name:"",email: "", password: "",cpassword:"" });
   let history = useNavigate();
   const{alert,alertCapitalize,showAlert} = useContext(AlertContext)
@@ -19,7 +20,7 @@ const Signup = () => {
         return;
       }
       console.log(user)
-      const response = await fetch(`http://localhost:5000/api/auth/CreateUser`, {
+      const response = await fetch(`${host}/api/auth/CreateUser`, {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {
               "Content-Type": "application/json",

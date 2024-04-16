@@ -10,7 +10,8 @@ const Login = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         // console.log(user)
-        const response = await fetch(`http://localhost:5000/api/auth/LoginUser`, {
+        const host = process.env.REACT_APP_HOST;
+        const response = await fetch(`${host}/api/auth/LoginUser`, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
