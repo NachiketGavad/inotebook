@@ -13,32 +13,42 @@ const Signup = () => {
   }
 
   const handlesubmit = async (e) => {
-      e.preventDefault();
-      if(user.password!==user.cpassword){
-        // alert("Please Enter Same Passwords");
-        showAlert("Enter Passwords don't match","danger");
-        return;
-      }
-      console.log(user)
-      const response = await fetch(`${host}/api/auth/CreateUser`, {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
-          headers: {
-              "Content-Type": "application/json",
-          }, body: JSON.stringify({name:user.name, email:user.email, password:user.password }), // body data type must match "Content-Type" header
-      });
-      const jsonbody = await response.json();
-      console.log(jsonbody)
-      if(jsonbody.success){
-          showAlert("Account Created Successfully","success");
-          // save token and send to home
-          localStorage.setItem('token',jsonbody.auth_token);
-          history("/");
-      }
-      else{
-          // alert("invalid credentials");
-            showAlert("Invalid credentials","danger");
-      }
-  }
+    e.preventDefault();
+
+    try {
+        if (user.password !== user.cpassword) {
+            showAlert("Passwords don't match", "danger");
+            return;
+        }
+
+        const host = process.env.REACT_APP_HOST;
+        const response = await fetch(`${host}/api/auth/CreateUser`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: user.name, email: user.email, password: user.password }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const jsonbody = await response.json();
+
+        if (jsonbody.success) {
+            showAlert("Account Created Successfully", "success");
+            localStorage.setItem('token', jsonbody.auth_token);
+            history("/");
+        } else {
+            showAlert("Invalid credentials", "danger");
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        showAlert("An error occurred. Please try again later.", "danger");
+    }
+}
+
 
   return (
     <div className='container col-md-4 border rounded p-3'>

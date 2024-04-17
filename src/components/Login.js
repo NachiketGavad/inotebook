@@ -9,28 +9,37 @@ const Login = () => {
 
     const handlesubmit = async (e) => {
         e.preventDefault();
-        // console.log(user)
-        const host = process.env.REACT_APP_HOST;
-        const response = await fetch(`${host}/api/auth/LoginUser`, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                "Content-Type": "application/json",
-            }, body: JSON.stringify({ email: user.email, password: user.password }), // body data type must match "Content-Type" header
-        });
-        const jsonbody = await response.json();
-        // console.log(jsonbody.success)
-        if (jsonbody.success) {
-            showAlert("Logged in Successfully", "success");
-            // save token and send to home
-            localStorage.setItem('token', jsonbody.auth_token);
-
-            history("/");
-        }
-        else {
-            showAlert("Invalid credentials", "danger");
-            // alert("invalid credentials");
+        
+        try {
+            const host = process.env.REACT_APP_HOST;
+            const response = await fetch(`${host}/api/auth/LoginUser`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: user.email, password: user.password }),
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const jsonbody = await response.json();
+            
+            if (jsonbody.success) {
+                showAlert("Logged in Successfully", "success");
+                localStorage.setItem('token', jsonbody.auth_token);
+                history("/");
+            } else {
+                showAlert("Invalid credentials", "danger");
+            }
+        } catch (error) {
+            // Handle network errors, server errors, or any other exceptions
+            console.error('Error:', error.message);
+            showAlert("An error occurred. Please try again later.", "danger");
         }
     }
+    
 
     // const handleChangeEmail = (event) =>{
     //     Setuser({email : event.target.value})
