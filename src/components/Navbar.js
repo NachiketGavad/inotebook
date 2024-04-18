@@ -9,7 +9,7 @@ const Navbar = () => {
   let location = useLocation();
   let history = useNavigate();
   useEffect(() => {
-    console.log(location.pathname);
+    // console.log(location.pathname);
   }, [location]);
 
   const handlelogout = () => {

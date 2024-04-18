@@ -44,7 +44,7 @@ const Signup = () => {
             showAlert("Invalid credentials", "danger");
         }
     } catch (error) {
-        console.error('Error:', error.message);
+        // console.error('Error:', error.message);
         showAlert("An error occurred. Please try again later.", "danger");
     }
 }
