@@ -19,7 +19,7 @@ const Notes = () => {
       history("/login");
     }
     // console.log(notes);
-  }, [notes]);
+  }, []);
 
   const ref = useRef(null)
   const refClose = useRef(null)

@@ -55,7 +55,7 @@ const Login = () => {
     }
 
     return (
-        <div className='container col-md-4 border rounded p-3'>
+        <div className='container col-md-4 sm-3 border rounded p-3 mx-auto'>
             <h3 className='my-3'>Login to use iNotebook</h3>
             <hr />
             <form>
