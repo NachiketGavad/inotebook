@@ -43,7 +43,7 @@ const Notes = () => {
   }
 
   return (
-    <div className="container my-3">
+    <div className="container">
 
       {/* <!-- Button trigger modal --> */}
       <button type="button" ref={ref} className="btn btn-primary  d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -114,7 +114,7 @@ const Notes = () => {
         </div>
       </div>
 
-      <h2>Your Notes</h2>
+      <h2 className="text-center">Your Notes</h2>
       <div className="row">
         {(notes.length === 0) && 'No Notes to Display'}
         {

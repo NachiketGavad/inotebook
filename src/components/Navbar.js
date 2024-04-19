@@ -15,7 +15,7 @@ const Navbar = () => {
   const handlelogout = () => {
     localStorage.removeItem('token');
     // notes=[];
-    history("/");
+    history("/Login");
   }
 
   const { darkMode, toggleDarkMode } = useDarkMode();

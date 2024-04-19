@@ -24,9 +24,9 @@ const AddNote = () => {
   };
   return (
     <div>
-      <div className="container md-3 lg-3">
+      <div className="row border p-3 mx-2">
         {/* This is Home */}
-        <h2> Add Notes</h2>
+        <h2 className="text-center"> Add Notes</h2>
         <form>
           {/* action="post" */}
           <div className="mb-3">
@@ -72,7 +72,7 @@ const AddNote = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-success"
             onClick={handleClick}
             disabled={note.title.length < 3 || note.description.length < 5}
           >

@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="col-md-8 mx-auto">
       <AddNote/>
-      <hr/>
+      <hr className="mt-5 mx-2"/>
       <Notes/>
     </div>
   );
